@@ -29,7 +29,7 @@ class _StammtischTabsScreenState extends State<StammtischTabsScreen> {
     },
     {
       "page": EventsOverviewScreen(),
-      "title": "AnstehendeTermine",
+      "title": "Termine",
     },
     {
       "page": StammtischDashboardScreen(),

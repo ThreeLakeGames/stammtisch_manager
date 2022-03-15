@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:stammtisch_manager/club_screens/events/event_model.dart';
+import 'package:stammtisch_manager/provider/stammtisch_item_data.dart';
 
 class EventItem extends StatelessWidget {
   EventItem({Key? key, required this.eventData}) : super(key: key);
@@ -51,7 +53,12 @@ class EventItem extends StatelessWidget {
                   ],
                 ),
               ),
-              PopupMenuButton(itemBuilder: (context) {
+              PopupMenuButton<String>(onSelected: ((value) {
+                if (value == "delete") {
+                  Provider.of<StammtischItemData>(context, listen: false)
+                      .deleteEvent(eventData.id);
+                }
+              }), itemBuilder: (context) {
                 return _popUpItems;
               })
             ],

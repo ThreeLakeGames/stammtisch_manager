@@ -8,7 +8,8 @@ class StammtischItemData with ChangeNotifier {
   StreamSubscription<DocumentSnapshot>? _streamSubscription;
   StreamSubscription<QuerySnapshot>? _eventsSubscription;
 
-  List<EventModel> events = [];
+  List<EventModel> upcomingEvents = [];
+  List<EventModel> outdatedEvents = [];
 
   bool isListening = false;
   String id;
@@ -56,9 +57,14 @@ class StammtischItemData with ChangeNotifier {
         .orderBy("date")
         .snapshots()
         .listen((snapshot) {
-      events = [];
+      upcomingEvents = [];
       for (final document in snapshot.docs) {
-        events.add(EventModel.fromJson(document.data()));
+        final date = document.data()["date"].toDate() as DateTime;
+        if (date.isAfter(DateTime.now())) {
+          upcomingEvents.add(EventModel.fromJson(document.id, document.data()));
+        } else {
+          outdatedEvents.add(EventModel.fromJson(document.id, document.data()));
+        }
       }
       notifyListeners();
     });
@@ -69,6 +75,10 @@ class StammtischItemData with ChangeNotifier {
         .collection(eventsCollectionPath)
         .add(event.toJson());
     print("added Event");
+  }
+
+  void deleteEvent(String id) {
+    FirebaseFirestore.instance.doc(eventsCollectionPath + "/$id").delete();
   }
 
   @override

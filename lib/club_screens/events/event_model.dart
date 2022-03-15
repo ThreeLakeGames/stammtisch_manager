@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventModel {
+  String id;
   DateTime date;
   RepeatEvent repeatEvent;
   String title;
@@ -13,6 +14,7 @@ class EventModel {
     required this.location,
     required this.description,
     required this.repeatEvent,
+    required this.id,
   });
 
   factory EventModel.createNew() {
@@ -21,12 +23,14 @@ class EventModel {
       title: "",
       location: "",
       description: "",
+      id: "",
       repeatEvent: RepeatEvent.noRepeat,
     );
   }
 
-  factory EventModel.fromJson(Map<String, dynamic> data) {
+  factory EventModel.fromJson(String id, Map<String, dynamic> data) {
     return EventModel(
+      id: id,
       date: data["date"].toDate(),
       title: data["title"] ?? "",
       location: data["location"] ?? "",
