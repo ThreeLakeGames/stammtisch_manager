@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stammtisch_manager/club_screens/stammtisch_dashboard_screen.dart';
-import 'package:stammtisch_manager/club_screens/stammtisch_tabs_screen.dart';
+import 'package:stammtisch_manager/club_screens/dashboard/stammtisch_dashboard_screen.dart';
+import 'package:stammtisch_manager/club_screens/root_screen/stammtisch_tabs_screen.dart';
 import 'package:stammtisch_manager/provider/stammtisch_item_data.dart';
 
 class StammtischOverviewItem extends StatelessWidget {

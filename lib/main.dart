@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:stammtisch_manager/club_screens/events/new_event_screen.dart';
-import 'package:stammtisch_manager/club_screens/stammtisch_dashboard_screen.dart';
-import 'package:stammtisch_manager/club_screens/stammtisch_tabs_screen.dart';
+import 'package:stammtisch_manager/club_screens/dashboard/stammtisch_dashboard_screen.dart';
+import 'package:stammtisch_manager/club_screens/root_screen/stammtisch_tabs_screen.dart';
 import 'package:stammtisch_manager/firebase_options.dart';
 import 'package:stammtisch_manager/provider/stammtisch_list_data.dart';
 import 'package:stammtisch_manager/stammtisch_overview/stammtisch_overview_screen.dart';
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
             StammtischOverviewScreen.routeName: (context) =>
                 const StammtischOverviewScreen(),
             StammtischDashboardScreen.routeName: (context) =>
-                const StammtischDashboardScreen(),
+                StammtischDashboardScreen(),
             NewStammtischScreen.routeName: (context) =>
                 const NewStammtischScreen(),
             StammtischTabsScreen.routeName: (context) =>

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_file.dart';
 import 'package:provider/provider.dart';
 import 'package:stammtisch_manager/club_screens/events/events_overview_screen.dart';
-import 'package:stammtisch_manager/club_screens/stammtisch_dashboard_screen.dart';
-import 'package:stammtisch_manager/club_screens/stammtisch_member_screen.dart';
+import 'package:stammtisch_manager/club_screens/events/new_event_button.dart';
+import 'package:stammtisch_manager/club_screens/dashboard/stammtisch_dashboard_screen.dart';
+import 'package:stammtisch_manager/club_screens/member/stammtisch_member_screen.dart';
 import 'package:stammtisch_manager/demoWidgets/calendar_demo_basic.dart';
 import 'package:stammtisch_manager/provider/stammtisch_item_data.dart';
 
@@ -18,26 +19,31 @@ class StammtischTabsScreen extends StatefulWidget {
 class _StammtischTabsScreenState extends State<StammtischTabsScreen> {
   late StammtischItemData stammtischData;
   bool isInit = false;
-  final List<Map<String, dynamic>> _pages = const [
+  final List<Map<String, dynamic>> _pages = [
     {
       "page": StammtischDashboardScreen(),
       "title": "Dashboard",
+      "appBarActions": null,
     },
     {
       "page": StammtischMemberScreen(),
       "title": "Mitglieder",
+      "appBarActions": null,
     },
     {
       "page": EventsOverviewScreen(),
       "title": "Termine",
+      "appBarActions": [const NewEventButton()],
     },
     {
       "page": StammtischDashboardScreen(),
       "title": "Chat",
+      "appBarActions": null,
     },
     {
       "page": StammtischDashboardScreen(),
       "title": "Voting",
+      "appBarActions": null,
     }
   ];
   int _selectedPageIndex = 0;
@@ -71,7 +77,10 @@ class _StammtischTabsScreenState extends State<StammtischTabsScreen> {
     return ChangeNotifierProvider.value(
       value: stammtischData,
       child: Scaffold(
-        appBar: AppBar(title: Text(_pages[_selectedPageIndex]["title"])),
+        appBar: AppBar(
+          title: Text(_pages[_selectedPageIndex]["title"]),
+          actions: _pages[_selectedPageIndex]["appBarActions"],
+        ),
         body: _pages[_selectedPageIndex]["page"],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,

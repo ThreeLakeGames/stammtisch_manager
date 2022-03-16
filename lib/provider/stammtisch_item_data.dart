@@ -11,6 +11,10 @@ class StammtischItemData with ChangeNotifier {
   List<EventModel> upcomingEvents = [];
   List<EventModel> outdatedEvents = [];
 
+  List<Widget> appBarActions = [
+    IconButton(onPressed: () {}, icon: const Icon(Icons.add))
+  ];
+
   bool isListening = false;
   String id;
   String title;
@@ -58,6 +62,7 @@ class StammtischItemData with ChangeNotifier {
         .snapshots()
         .listen((snapshot) {
       upcomingEvents = [];
+      outdatedEvents = [];
       for (final document in snapshot.docs) {
         final date = document.data()["date"].toDate() as DateTime;
         if (date.isAfter(DateTime.now())) {
@@ -79,6 +84,11 @@ class StammtischItemData with ChangeNotifier {
 
   void deleteEvent(String id) {
     FirebaseFirestore.instance.doc(eventsCollectionPath + "/$id").delete();
+  }
+
+  void setAppBarActions(List<Widget> actions) {
+    appBarActions = actions;
+    notifyListeners();
   }
 
   @override
