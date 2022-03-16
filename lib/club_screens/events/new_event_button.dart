@@ -21,7 +21,10 @@ class NewEventButton extends StatelessWidget {
   }
 
   void startAddNewEvent(BuildContext ctx) {
-    Navigator.of(ctx).pushNamed(NewEventScreen.routeName).then((result) {
+    Navigator.push(
+      ctx,
+      MaterialPageRoute(builder: (context) => NewEventScreen.addEvent()),
+    ).then((result) {
       if (result == null) {
         return;
       }

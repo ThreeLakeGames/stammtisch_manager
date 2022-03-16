@@ -82,8 +82,16 @@ class StammtischItemData with ChangeNotifier {
     print("added Event");
   }
 
+  DocumentReference<Map<String, dynamic>> getEventDocumentRef(String id) {
+    return FirebaseFirestore.instance.doc(eventsCollectionPath + "/$id");
+  }
+
   void deleteEvent(String id) {
-    FirebaseFirestore.instance.doc(eventsCollectionPath + "/$id").delete();
+    getEventDocumentRef(id).delete();
+  }
+
+  void editEvent(EventModel event) {
+    getEventDocumentRef(event.id).update(event.toJson());
   }
 
   void setAppBarActions(List<Widget> actions) {

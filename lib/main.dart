@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:stammtisch_manager/club_screens/events/event_model.dart';
 import 'package:stammtisch_manager/club_screens/events/new_event_screen.dart';
 import 'package:stammtisch_manager/club_screens/dashboard/stammtisch_dashboard_screen.dart';
 import 'package:stammtisch_manager/club_screens/root_screen/stammtisch_tabs_screen.dart';
@@ -52,7 +53,9 @@ class MyApp extends StatelessWidget {
                 const NewStammtischScreen(),
             StammtischTabsScreen.routeName: (context) =>
                 const StammtischTabsScreen(),
-            NewEventScreen.routeName: (context) => const NewEventScreen(),
+            // NewEventScreen.routeName: (context) => NewEventScreen(
+            //       eventData: EventModel.createNew(),
+            // ),
           },
         );
       },

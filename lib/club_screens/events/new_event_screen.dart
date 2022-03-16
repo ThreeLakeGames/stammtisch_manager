@@ -7,7 +7,24 @@ import 'package:stammtisch_manager/provider/stammtisch_item_data.dart';
 
 class NewEventScreen extends StatefulWidget {
   static const routeName = "/new-event-screen";
-  const NewEventScreen({Key? key}) : super(key: key);
+  final EventModel eventData;
+  final bool isEditing;
+  const NewEventScreen(
+      {Key? key, required this.eventData, required this.isEditing})
+      : super(key: key);
+
+  factory NewEventScreen.addEvent() {
+    return NewEventScreen(
+      eventData: EventModel.createNew(),
+      isEditing: false,
+    );
+  }
+  factory NewEventScreen.editEvent(EventModel eventModel) {
+    return NewEventScreen(
+      eventData: eventModel,
+      isEditing: true,
+    );
+  }
 
   @override
   State<NewEventScreen> createState() => _NewEventScreenState();
@@ -15,12 +32,20 @@ class NewEventScreen extends StatefulWidget {
 
 class _NewEventScreenState extends State<NewEventScreen> {
   final _form = GlobalKey<FormState>();
-  EventModel newEvent = EventModel.createNew();
+  late EventModel eventData;
+  late bool isEditing;
+
+  @override
+  void initState() {
+    eventData = widget.eventData;
+    isEditing = widget.isEditing;
+    super.initState();
+  }
 
   void startDatePicker() {
     showDatePicker(
       context: context,
-      initialDate: newEvent.date,
+      initialDate: eventData.date,
       firstDate: DateTime.now().subtract(const Duration(days: 365)),
       lastDate: DateTime.now().add(const Duration(days: 365)),
     ).then((value) {
@@ -28,14 +53,14 @@ class _NewEventScreenState extends State<NewEventScreen> {
         return;
       }
       setState(() {
-        newEvent.date = value;
+        eventData.date = value;
       });
     });
   }
 
   void startDateTimePicker() {
     DatePicker.showDatePicker(context,
-            currentTime: newEvent.date,
+            currentTime: eventData.date,
             minTime: DateTime.now().subtract(const Duration(days: 365)),
             maxTime: DateTime.now().add(const Duration(days: 365 * 3)),
             locale: LocaleType.de)
@@ -44,7 +69,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
         return;
       }
       setState(() {
-        newEvent.date = value;
+        eventData.date = value;
       });
     });
   }
@@ -56,14 +81,16 @@ class _NewEventScreenState extends State<NewEventScreen> {
     }
     _form.currentState!.save();
 
-    Navigator.of(context).pop(newEvent);
+    Navigator.of(context).pop(eventData);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Termin hinzufügen"),
+        title: Text(
+          isEditing ? "Termin bearbeiten" : "Termin hinzufügen",
+        ),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -75,10 +102,11 @@ class _NewEventScreenState extends State<NewEventScreen> {
               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextFormField(
+                  initialValue: eventData.title,
                   decoration: const InputDecoration(
                       labelText: "Anlass", hintText: "z.B. Stammtisch-Termin"),
                   onSaved: (newTitle) {
-                    newEvent.title = newTitle ?? "";
+                    eventData.title = newTitle ?? "";
                   },
                   validator: (newTitle) {
                     if (newTitle!.isEmpty) {
@@ -91,20 +119,22 @@ class _NewEventScreenState extends State<NewEventScreen> {
                   height: 20,
                 ),
                 TextFormField(
+                  initialValue: eventData.location,
                   decoration: const InputDecoration(
                       labelText: "Ort", hintText: "z.B. Kellerwirt"),
                   onSaved: (location) {
-                    newEvent.location = location ?? "";
+                    eventData.location = location ?? "";
                   },
                 ),
                 TextFormField(
+                  initialValue: eventData.description,
                   maxLines: 3,
                   keyboardType: TextInputType.multiline,
                   decoration: const InputDecoration(
                       labelText: "Beschreibung",
                       hintText: "z.B. Besprechung Stammtischausflug!"),
                   onSaved: (newDescription) {
-                    newEvent.description = newDescription ?? "";
+                    eventData.description = newDescription ?? "";
                   },
                 ),
                 const SizedBox(
@@ -118,7 +148,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      DateFormat.yMMMd().format(newEvent.date),
+                      DateFormat.yMMMd().format(eventData.date),
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                     OutlinedButton(
@@ -142,7 +172,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                     value: RepeatEvent.noRepeat,
                     items: repeatingOptions,
                     onChanged: (newRepeatEvent) {
-                      newEvent.repeatEvent =
+                      eventData.repeatEvent =
                           newRepeatEvent ?? RepeatEvent.noRepeat;
                     }),
                 const SizedBox(
@@ -157,7 +187,11 @@ class _NewEventScreenState extends State<NewEventScreen> {
                         onPressed: () {
                           _submitData();
                         },
-                        child: const Text("neuen Termin hinzufügen")),
+                        child: Text(
+                          isEditing
+                              ? "Termin bearbeiten"
+                              : "neuen Termin hinzufügen",
+                        )),
                   ],
                 )
               ],

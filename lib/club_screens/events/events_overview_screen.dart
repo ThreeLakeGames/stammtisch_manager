@@ -14,45 +14,8 @@ class EventsOverviewScreen extends StatefulWidget {
 }
 
 class _EventsOverviewScreenState extends State<EventsOverviewScreen> {
-  bool isInit = false;
-  List<Widget> getAppBarActions() {
-    return [
-      IconButton(
-          onPressed: () {
-            startAddNewEvent();
-          },
-          icon: const Icon(Icons.add_a_photo))
-    ];
-  }
-
   bool _isShowingUpComingEvents = true;
   int _selectedPageIndex = 0;
-
-  // @override
-  // void didChangeDependencies() {
-  //   if (!isInit) {
-  //     Provider.of<StammtischItemData>(context, listen: false)
-  //         .setAppBarActions(getAppBarActions());
-  //   }
-  //   super.didChangeDependencies();
-  // }
-
-  @override
-  void initState() {
-    widget.appBarActions = getAppBarActions();
-
-    super.initState();
-  }
-
-  void startAddNewEvent() {
-    Navigator.of(context).pushNamed(NewEventScreen.routeName).then((result) {
-      if (result == null) {
-        return;
-      }
-      Provider.of<StammtischItemData>(context, listen: false)
-          .addEventToList(result as EventModel);
-    });
-  }
 
   void _selectPage(int index) {
     setState(() {
