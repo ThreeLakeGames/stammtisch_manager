@@ -37,6 +37,10 @@ class MyApp extends StatelessWidget {
                       fontWeight: FontWeight.normal, fontSize: 22),
                   bodyMedium: GoogleFonts.fredokaOne(
                       fontWeight: FontWeight.normal, color: Colors.black54),
+                  bodyLarge: GoogleFonts.fredokaOne(
+                      fontWeight: FontWeight.normal,
+                      color: Color.fromARGB(180, 0, 0, 0),
+                      fontSize: 18),
                 ),
           ),
           home: appSnapshot.connectionState != ConnectionState.done

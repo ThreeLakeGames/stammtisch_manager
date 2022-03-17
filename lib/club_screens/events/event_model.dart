@@ -7,6 +7,7 @@ class EventModel {
   String title;
   String location;
   String description;
+  int repeatingCount;
 
   EventModel({
     required this.date,
@@ -15,16 +16,26 @@ class EventModel {
     required this.description,
     required this.repeatEvent,
     required this.id,
+    required this.repeatingCount,
   });
 
   factory EventModel.createNew() {
+    final DateTime initDate = DateTime.now();
+    const int initHour = 19;
+
     return EventModel(
-      date: DateTime.now(),
+      date: DateTime(
+        initDate.year,
+        initDate.month,
+        initDate.day,
+        initHour,
+      ),
       title: "",
       location: "",
       description: "",
       id: "",
       repeatEvent: RepeatEvent.noRepeat,
+      repeatingCount: 1,
     );
   }
 
@@ -36,6 +47,7 @@ class EventModel {
       location: data["location"] ?? "",
       description: data["description"] ?? "",
       repeatEvent: RepeatEvent.noRepeat,
+      repeatingCount: 1,
     );
   }
 
@@ -74,6 +86,27 @@ extension RepeatEventExtension on RepeatEvent {
 
       default:
         return "einmalig";
+    }
+  }
+
+// returns new DateTime based on the repetion setting.
+// this is used to get the proper dates, when you add repeated events.
+  DateTime getRepeatedEventDate(DateTime date, int repeatCount) {
+    switch (this) {
+      case RepeatEvent.monthly:
+        return DateTime(date.year, date.month + 1 * repeatCount, date.day,
+            date.hour, date.minute);
+      case RepeatEvent.everyTwoWeeks:
+        return DateTime(date.year, date.month, date.day + 14 * repeatCount,
+            date.hour, date.minute);
+      case RepeatEvent.weekly:
+        return DateTime(date.year, date.month, date.day + 7 * repeatCount,
+            date.hour, date.minute);
+      case RepeatEvent.noRepeat:
+        return date;
+
+      default:
+        return date;
     }
   }
 }

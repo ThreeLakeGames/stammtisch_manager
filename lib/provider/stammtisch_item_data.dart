@@ -79,7 +79,6 @@ class StammtischItemData with ChangeNotifier {
     FirebaseFirestore.instance
         .collection(eventsCollectionPath)
         .add(event.toJson());
-    print("added Event");
   }
 
   DocumentReference<Map<String, dynamic>> getEventDocumentRef(String id) {

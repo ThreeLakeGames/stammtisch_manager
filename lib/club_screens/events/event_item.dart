@@ -9,26 +9,40 @@ class EventItem extends StatelessWidget {
   EventItem({Key? key, required this.eventData}) : super(key: key);
   final EventModel eventData;
 
-  final List<PopupMenuItem<String>> _popUpItems = [
-    PopupMenuItem<String>(
-      child: Row(
-        children: const [
-          Icon(Icons.settings),
-          Text("  bearbeiten"),
-        ],
+  List<PopupMenuItem<String>> _getPopUpItems(BuildContext ctx) {
+    return [
+      PopupMenuItem<String>(
+        child: Row(
+          children: [
+            Icon(
+              Icons.edit,
+              color: Theme.of(ctx).textTheme.bodyLarge!.color,
+            ),
+            Text(
+              "  bearbeiten",
+              style: Theme.of(ctx).textTheme.bodyLarge,
+            ),
+          ],
+        ),
+        value: "edit",
       ),
-      value: "edit",
-    ),
-    PopupMenuItem<String>(
-      child: Row(
-        children: const [
-          Icon(Icons.delete),
-          Text(" entfernen"),
-        ],
+      PopupMenuItem<String>(
+        child: Row(
+          children: [
+            Icon(
+              Icons.delete,
+              color: Theme.of(ctx).textTheme.bodyLarge!.color,
+            ),
+            Text(
+              "  entfernen",
+              style: Theme.of(ctx).textTheme.bodyLarge,
+            ),
+          ],
+        ),
+        value: "delete",
       ),
-      value: "delete",
-    ),
-  ];
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +75,8 @@ class EventItem extends StatelessWidget {
                 } else if (value == "edit") {
                   startAddNewEvent(context, eventData);
                 }
-              }), itemBuilder: (context) {
-                return _popUpItems;
+              }), itemBuilder: (ctx) {
+                return _getPopUpItems(ctx);
               })
             ],
           ),
@@ -95,11 +109,17 @@ class EventItem extends StatelessWidget {
             children: [
               Text(
                 DateFormat.yMMMMd().format(eventData.date),
-// style: Theme.of(ctx).textTheme.bodyLarge,
+                // style: Theme.of(ctx).textTheme.bodyLarge,
               ),
               if (eventData.isInPast) const Text(" (Vergangen)")
             ],
           ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 3.0),
+          child: Text("Uhrzeit: ${DateFormat.Hm().format(eventData.date)}"
+              // style: Theme.of(ctx).textTheme.bodyLarge,
+              ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 3.0),

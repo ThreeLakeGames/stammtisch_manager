@@ -20,6 +20,20 @@ class NewEventButton extends StatelessWidget {
     );
   }
 
+  void addNewEvents(BuildContext ctx, EventModel event) {
+    final stammtischItemProvider =
+        Provider.of<StammtischItemData>(ctx, listen: false);
+    if (event.repeatEvent == RepeatEvent.noRepeat) {
+      stammtischItemProvider.addEventToList(event);
+      return;
+    }
+    DateTime firstEventDate = event.date;
+    for (var i = 0; i < event.repeatingCount; i++) {
+      event.date = event.repeatEvent.getRepeatedEventDate(firstEventDate, i);
+      stammtischItemProvider.addEventToList(event);
+    }
+  }
+
   void startAddNewEvent(BuildContext ctx) {
     Navigator.push(
       ctx,
@@ -28,8 +42,7 @@ class NewEventButton extends StatelessWidget {
       if (result == null) {
         return;
       }
-      Provider.of<StammtischItemData>(ctx, listen: false)
-          .addEventToList(result as EventModel);
+      addNewEvents(ctx, result as EventModel);
     });
   }
 }
