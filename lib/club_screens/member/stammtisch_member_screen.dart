@@ -13,7 +13,9 @@ class _StammtischMemberScreenState extends State<StammtischMemberScreen> {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text("Member Screen"),
+      child: Text(
+        "Member Screen",
+      ),
     );
   }
 }

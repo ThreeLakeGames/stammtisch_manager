@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stammtisch_manager/provider/stammtisch_item_data.dart';
@@ -14,6 +15,13 @@ class StammtischOverviewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Stammtisch-Übersicht"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              icon: const Icon(Icons.logout))
+        ],
       ),
       body: const StammtischOverviewList(),
     );
