@@ -6,7 +6,7 @@ import 'package:stammtisch_manager/club_screens/events/new_event_screen.dart';
 import 'package:stammtisch_manager/provider/stammtisch_item_data.dart';
 import 'package:stammtisch_manager/provider/stammtisch_list_data.dart';
 import 'package:stammtisch_manager/stammtisch_overview/stammtisch_overview_item.dart';
-import 'package:stammtisch_manager/user_screens/new_stammtisch_screen.dart';
+import 'package:stammtisch_manager/stammtisch_overview/new_stammtisch_screen.dart';
 
 class StammtischOverviewScreen extends StatefulWidget {
   const StammtischOverviewScreen({Key? key}) : super(key: key);

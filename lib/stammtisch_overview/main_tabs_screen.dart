@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stammtisch_manager/stammtisch_overview/stammtisch_overview_screen.dart';
-import 'package:stammtisch_manager/user_screens/new_stammtisch_screen.dart';
+import 'package:stammtisch_manager/stammtisch_overview/new_stammtisch_screen.dart';
 
 class MainTabsScreen extends StatefulWidget {
   MainTabsScreen({Key? key}) : super(key: key);

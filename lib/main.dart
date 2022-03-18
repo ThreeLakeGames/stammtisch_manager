@@ -14,7 +14,7 @@ import 'package:stammtisch_manager/firebase_options.dart';
 import 'package:stammtisch_manager/provider/stammtisch_list_data.dart';
 import 'package:stammtisch_manager/stammtisch_overview/main_tabs_screen.dart';
 import 'package:stammtisch_manager/stammtisch_overview/stammtisch_overview_screen.dart';
-import 'package:stammtisch_manager/user_screens/new_stammtisch_screen.dart';
+import 'package:stammtisch_manager/stammtisch_overview/new_stammtisch_screen.dart';
 import 'package:stammtisch_manager/user_screens/splash_screen.dart';
 
 void main() {
