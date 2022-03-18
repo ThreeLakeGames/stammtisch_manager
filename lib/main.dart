@@ -12,6 +12,7 @@ import 'package:stammtisch_manager/club_screens/dashboard/stammtisch_dashboard_s
 import 'package:stammtisch_manager/club_screens/root_screen/stammtisch_tabs_screen.dart';
 import 'package:stammtisch_manager/firebase_options.dart';
 import 'package:stammtisch_manager/provider/stammtisch_list_data.dart';
+import 'package:stammtisch_manager/stammtisch_overview/main_tabs_screen.dart';
 import 'package:stammtisch_manager/stammtisch_overview/stammtisch_overview_screen.dart';
 import 'package:stammtisch_manager/user_screens/new_stammtisch_screen.dart';
 import 'package:stammtisch_manager/user_screens/splash_screen.dart';
@@ -50,6 +51,10 @@ class MyApp extends StatelessWidget {
             textTheme: Theme.of(context).textTheme.copyWith(
                   headlineSmall: GoogleFonts.fredokaOne(
                       fontWeight: FontWeight.normal, fontSize: 22),
+                  headlineMedium: GoogleFonts.fredokaOne(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 24,
+                  ),
                   headlineLarge:
                       GoogleFonts.fredokaOne(fontWeight: FontWeight.normal),
                   bodyMedium: GoogleFonts.fredokaOne(
@@ -71,19 +76,19 @@ class MyApp extends StatelessWidget {
 
                     return ChangeNotifierProvider.value(
                       value: StammtischListData(),
-                      child: const StammtischOverviewScreen(),
+                      child: MainTabsScreen(),
                     );
                   },
                 ),
           routes: {
-            StammtischOverviewScreen.routeName: (context) =>
-                const StammtischOverviewScreen(),
             StammtischDashboardScreen.routeName: (context) =>
                 StammtischDashboardScreen(),
             NewStammtischScreen.routeName: (context) =>
                 const NewStammtischScreen(),
             StammtischTabsScreen.routeName: (context) =>
                 const StammtischTabsScreen(),
+            // StammtischOverviewScreen.routeName: (context) =>
+            //     const StammtischOverviewScreen(),
             // NewEventScreen.routeName: (context) => NewEventScreen(
             //       eventData: EventModel.createNew(),
             // ),

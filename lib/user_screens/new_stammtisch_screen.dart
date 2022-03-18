@@ -15,10 +15,12 @@ class _NewStammtischScreenState extends State<NewStammtischScreen> {
   StammtischItemData newStammtisch = StammtischItemData(id: "", title: "");
   void _submitData() {
     final isValid = _formKey.currentState!.validate();
-    if (isValid) {
-      _formKey.currentState!.save();
-      addStammtischToDB();
+    if (!isValid) {
+      return;
     }
+    _formKey.currentState!.save();
+    addStammtischToDB();
+    Navigator.of(context).pop();
   }
 
   Future<void> addStammtischToDB() async {
@@ -41,6 +43,7 @@ class _NewStammtischScreenState extends State<NewStammtischScreen> {
       body: Form(
         key: _formKey,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextFormField(
                 decoration:

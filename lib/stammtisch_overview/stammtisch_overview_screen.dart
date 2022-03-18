@@ -2,40 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stammtisch_manager/club_screens/events/new_event_screen.dart';
 import 'package:stammtisch_manager/provider/stammtisch_item_data.dart';
 import 'package:stammtisch_manager/provider/stammtisch_list_data.dart';
 import 'package:stammtisch_manager/stammtisch_overview/stammtisch_overview_item.dart';
+import 'package:stammtisch_manager/user_screens/new_stammtisch_screen.dart';
 
-class StammtischOverviewScreen extends StatelessWidget {
-  static const routeName = "/stammtisch-overview-screen";
+class StammtischOverviewScreen extends StatefulWidget {
   const StammtischOverviewScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Stammtisch-Übersicht"),
-        actions: [
-          IconButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              icon: const Icon(Icons.logout))
-        ],
-      ),
-      body: const StammtischOverviewList(),
-    );
-  }
+  State<StammtischOverviewScreen> createState() =>
+      _StammtischOverviewScreenState();
 }
 
-class StammtischOverviewList extends StatefulWidget {
-  const StammtischOverviewList({Key? key}) : super(key: key);
-
-  @override
-  State<StammtischOverviewList> createState() => _StammtischOverviewListState();
-}
-
-class _StammtischOverviewListState extends State<StammtischOverviewList> {
+class _StammtischOverviewScreenState extends State<StammtischOverviewScreen> {
   @override
   void initState() {
     Provider.of<StammtischListData>(context, listen: false).setUpClubListener();

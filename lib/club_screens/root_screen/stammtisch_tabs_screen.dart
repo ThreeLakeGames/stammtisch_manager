@@ -5,6 +5,7 @@ import 'package:stammtisch_manager/club_screens/events/events_overview_screen.da
 import 'package:stammtisch_manager/club_screens/events/new_event_button.dart';
 import 'package:stammtisch_manager/club_screens/dashboard/stammtisch_dashboard_screen.dart';
 import 'package:stammtisch_manager/club_screens/member/stammtisch_member_screen.dart';
+import 'package:stammtisch_manager/club_screens/side_drawer/club_drawer.dart';
 import 'package:stammtisch_manager/demoWidgets/calendar_demo_basic.dart';
 import 'package:stammtisch_manager/provider/stammtisch_item_data.dart';
 
@@ -82,6 +83,7 @@ class _StammtischTabsScreenState extends State<StammtischTabsScreen> {
           actions: _pages[_selectedPageIndex]["appBarActions"],
         ),
         body: _pages[_selectedPageIndex]["page"],
+        drawer: const ClubDrawer(),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: _selectedPageIndex,
