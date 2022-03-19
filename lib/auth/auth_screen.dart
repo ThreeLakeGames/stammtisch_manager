@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 
@@ -14,6 +15,8 @@ class AuthScreen extends StatelessWidget {
         child: LimitedBox(
           maxHeight: MediaQuery.of(context).size.height,
           child: SignInScreen(
+            actions: [],
+            auth: FirebaseAuth.instance,
             headerMaxExtent: 250,
             headerBuilder: (context, c, _) => Center(
               child: Flex(

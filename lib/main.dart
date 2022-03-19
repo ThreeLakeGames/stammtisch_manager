@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -6,14 +7,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:stammtisch_manager/auth/auth_screen.dart';
 import 'package:stammtisch_manager/auth/german_label_overrides.dart';
-import 'package:stammtisch_manager/club_screens/events/event_model.dart';
-import 'package:stammtisch_manager/club_screens/events/new_event_screen.dart';
 import 'package:stammtisch_manager/club_screens/dashboard/stammtisch_dashboard_screen.dart';
 import 'package:stammtisch_manager/club_screens/root_screen/stammtisch_tabs_screen.dart';
 import 'package:stammtisch_manager/firebase_options.dart';
 import 'package:stammtisch_manager/provider/stammtisch_list_data.dart';
 import 'package:stammtisch_manager/stammtisch_overview/main_tabs_screen.dart';
-import 'package:stammtisch_manager/stammtisch_overview/stammtisch_overview_screen.dart';
 import 'package:stammtisch_manager/stammtisch_overview/new_stammtisch_screen.dart';
 import 'package:stammtisch_manager/user_screens/splash_screen.dart';
 
@@ -73,6 +71,7 @@ class MyApp extends StatelessWidget {
                     if (!userSnapshot.hasData) {
                       return const AuthScreen();
                     }
+                    storeUserToDB(FirebaseAuth.instance.currentUser!);
 
                     return ChangeNotifierProvider.value(
                       value: StammtischListData(),
@@ -96,5 +95,12 @@ class MyApp extends StatelessWidget {
         );
       },
     );
+  }
+
+  void storeUserToDB(User user) {
+    FirebaseFirestore.instance.collection("users").doc(user.uid).set({
+      "email": user.email,
+      "name": user.displayName ?? "Radlerdringa",
+    });
   }
 }

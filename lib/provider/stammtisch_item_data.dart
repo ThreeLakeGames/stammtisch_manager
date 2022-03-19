@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stammtisch_manager/club_screens/events/event_model.dart';
 
@@ -11,6 +12,8 @@ class StammtischItemData with ChangeNotifier {
   List<EventModel> upcomingEvents = [];
   List<EventModel> outdatedEvents = [];
 
+  List<String> memberIDs = [];
+
   List<Widget> appBarActions = [
     IconButton(onPressed: () {}, icon: const Icon(Icons.add))
   ];
@@ -19,12 +22,12 @@ class StammtischItemData with ChangeNotifier {
   String id;
   String title;
 
-  String get rootCollectionPath {
+  String get rootDocumentPath {
     return "stammtischList/$id";
   }
 
   String get eventsCollectionPath {
-    return "$rootCollectionPath/termine";
+    return "$rootDocumentPath/termine";
   }
 
   StammtischItemData({
@@ -47,13 +50,15 @@ class StammtischItemData with ChangeNotifier {
     }
     isListening = true;
     _streamSubscription = FirebaseFirestore.instance
-        .doc(rootCollectionPath)
+        .doc(rootDocumentPath)
         .snapshots()
         .listen((snapshot) {
       title = snapshot.data()!["stammtischTitle"] ?? "fail";
       notifyListeners();
     });
   }
+
+//---------------------*EVENTS*---------------------------------------------------
 
   void setUpEventsListener() {
     _eventsSubscription = FirebaseFirestore.instance
@@ -91,6 +96,17 @@ class StammtischItemData with ChangeNotifier {
 
   void editEvent(EventModel event) {
     getEventDocumentRef(event.id).update(event.toJson());
+  }
+
+//-------------------*MEMBER-MANAGEMENT*---------------------------------------------------
+
+  void addMemberToClub(String id) {
+    FirebaseFirestore.instance.doc(rootDocumentPath).update(
+      {
+        "memberIDs":
+            FieldValue.arrayUnion([FirebaseAuth.instance.currentUser!.uid]),
+      },
+    );
   }
 
   void setAppBarActions(List<Widget> actions) {

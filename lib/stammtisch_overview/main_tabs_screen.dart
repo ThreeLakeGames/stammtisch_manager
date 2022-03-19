@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stammtisch_manager/stammtisch_overview/stammtisch_overview_screen.dart';
 import 'package:stammtisch_manager/stammtisch_overview/new_stammtisch_screen.dart';
+import 'package:stammtisch_manager/user_screens/invitations_screen.dart';
 
 class MainTabsScreen extends StatefulWidget {
   MainTabsScreen({Key? key}) : super(key: key);
@@ -15,10 +16,10 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
   final List<Map<String, dynamic>> _pages = [
     {
       "page": const StammtischOverviewScreen(),
-      "title": "Stammtischübersicht",
+      "title": "Stammtisch - Übersicht",
     },
     {
-      "page": const StammtischOverviewScreen(),
+      "page": const InvitationsScreen(),
       "title": "Einladungen",
     }
   ];
@@ -41,12 +42,14 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
               icon: const Icon(Icons.logout))
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed(NewStammtischScreen.routeName);
-        },
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: _selectedPageIndex == 0
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(NewStammtischScreen.routeName);
+              },
+              child: const Icon(Icons.add),
+            )
+          : null,
       body: _pages[_selectedPageIndex]["page"],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stammtisch_manager/provider/stammtisch_item_data.dart';
 
@@ -25,10 +26,10 @@ class _NewStammtischScreenState extends State<NewStammtischScreen> {
 
   Future<void> addStammtischToDB() async {
     try {
-      await FirebaseFirestore.instance
-          .collection("stammtischList")
-          .add({"stammtischTitle": newStammtisch.title}).then(
-              (value) => newStammtisch.id = value.id);
+      await FirebaseFirestore.instance.collection("stammtischList").add({
+        "stammtischTitle": newStammtisch.title,
+        "memberIDs": [FirebaseAuth.instance.currentUser!.uid]
+      }).then((value) => newStammtisch.id = value.id);
     } catch (error) {
       print(error);
     }
