@@ -15,7 +15,8 @@ import 'package:stammtisch_manager/stammtisch_overview/main_tabs_screen.dart';
 import 'package:stammtisch_manager/stammtisch_overview/new_stammtisch_screen.dart';
 import 'package:stammtisch_manager/user_screens/splash_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 

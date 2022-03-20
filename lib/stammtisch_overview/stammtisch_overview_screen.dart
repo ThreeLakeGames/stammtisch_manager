@@ -1,12 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stammtisch_manager/club_screens/events/new_event_screen.dart';
-import 'package:stammtisch_manager/provider/stammtisch_item_data.dart';
 import 'package:stammtisch_manager/provider/stammtisch_list_data.dart';
 import 'package:stammtisch_manager/stammtisch_overview/stammtisch_overview_item.dart';
-import 'package:stammtisch_manager/stammtisch_overview/new_stammtisch_screen.dart';
 
 class StammtischOverviewScreen extends StatefulWidget {
   const StammtischOverviewScreen({Key? key}) : super(key: key);
@@ -19,7 +15,11 @@ class StammtischOverviewScreen extends StatefulWidget {
 class _StammtischOverviewScreenState extends State<StammtischOverviewScreen> {
   @override
   void initState() {
-    Provider.of<StammtischListData>(context, listen: false).setUpClubListener();
+    final clubListData =
+        Provider.of<StammtischListData>(context, listen: false);
+    clubListData.setUpClubListener();
+    clubListData.initDynamicLinks();
+
     super.initState();
   }
 

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:stammtisch_manager/auth/invitationLink.dart';
 import 'package:stammtisch_manager/club_screens/events/event_model.dart';
 
 class StammtischItemData with ChangeNotifier {
@@ -21,6 +22,7 @@ class StammtischItemData with ChangeNotifier {
   bool isListening = false;
   String id;
   String title;
+  String? invitationLink;
 
   String get rootDocumentPath {
     return "stammtischList/$id";
@@ -33,6 +35,7 @@ class StammtischItemData with ChangeNotifier {
   StammtischItemData({
     required this.id,
     required this.title,
+    this.invitationLink,
   });
 
   factory StammtischItemData.fromFirestore({
@@ -41,6 +44,16 @@ class StammtischItemData with ChangeNotifier {
   }) {
     return StammtischItemData(
         id: id, title: data["stammtischTitle"] ?? "error");
+  }
+
+  void initInvitationLink() async {
+    if (invitationLink != null) return;
+    final link = await InvitationLink.createDynamicLink(id);
+    FirebaseFirestore.instance.doc(rootDocumentPath).update(
+      {
+        "invitationLink": link,
+      },
+    );
   }
 
   void setUpListener() {
@@ -54,6 +67,7 @@ class StammtischItemData with ChangeNotifier {
         .snapshots()
         .listen((snapshot) {
       title = snapshot.data()!["stammtischTitle"] ?? "fail";
+      invitationLink = snapshot.data()!["invitationLink"];
       notifyListeners();
     });
   }

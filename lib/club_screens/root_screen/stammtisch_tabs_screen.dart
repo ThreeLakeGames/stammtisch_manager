@@ -62,6 +62,7 @@ class _StammtischTabsScreenState extends State<StammtischTabsScreen> {
       stammtischData = StammtischItemData(id: stammtischID, title: "");
       stammtischData.setUpListener();
       stammtischData.setUpEventsListener();
+      stammtischData.initInvitationLink();
       isInit = true;
     }
     super.didChangeDependencies();
