@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:stammtisch_manager/auth/auth_screen.dart';
 import 'package:stammtisch_manager/auth/german_label_overrides.dart';
+import 'package:stammtisch_manager/userProfile/profile_overview.dart';
 import 'package:stammtisch_manager/club_screens/dashboard/stammtisch_dashboard_screen.dart';
 import 'package:stammtisch_manager/club_screens/root_screen/stammtisch_tabs_screen.dart';
 import 'package:stammtisch_manager/firebase_options.dart';
@@ -87,6 +88,7 @@ class MyApp extends StatelessWidget {
                 const NewStammtischScreen(),
             StammtischTabsScreen.routeName: (context) =>
                 const StammtischTabsScreen(),
+            ProfileOverview.routeName: (context) => const ProfileOverview(),
             // StammtischOverviewScreen.routeName: (context) =>
             //     const StammtischOverviewScreen(),
             // NewEventScreen.routeName: (context) => NewEventScreen(

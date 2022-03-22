@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfire_ui/auth.dart';
+import 'package:stammtisch_manager/userProfile/profile_overview.dart';
 import 'package:stammtisch_manager/stammtisch_overview/stammtisch_overview_screen.dart';
 import 'package:stammtisch_manager/stammtisch_overview/new_stammtisch_screen.dart';
 import 'package:stammtisch_manager/user_screens/invitations_screen.dart';
@@ -19,8 +21,8 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
       "title": "Stammtisch - Übersicht",
     },
     {
-      "page": const InvitationsScreen(),
-      "title": "Einladungen",
+      "page": const ProfileOverview(),
+      "title": "Profil",
     }
   ];
   void _selectPage(int index) {
@@ -61,8 +63,8 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
             label: "Übersicht",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications_active),
-            label: "Einladungen",
+            icon: Icon(Icons.person),
+            label: "Profil",
           ),
         ],
       ),
