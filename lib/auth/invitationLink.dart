@@ -1,11 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class InvitationLink {
   static Future<String> createDynamicLink(String clubID) async {
-    String _linkMessage;
-
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       // The Dynamic Link URI domain. You can view created URIs on your Firebase console
       uriPrefix: 'https://stammtischmanager.page.link',
